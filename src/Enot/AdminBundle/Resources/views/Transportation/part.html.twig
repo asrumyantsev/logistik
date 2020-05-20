@@ -1,0 +1,58 @@
+<table class="table table-striped table-bordered table-hover table-checkable table-responsive datatable">
+    <thead>
+    <tr>
+        <th data-class="expand">ID</th>
+        <th>Выгрузка</th>
+        <th>Груз</th>
+        <th>Откуда</th>
+        <th>Куда</th>
+        <th>Терминал</th>
+
+        <th>Авто</th>
+        <th>ФИО</th>
+        <th>Телефон</th>
+        <th>Статус</th>
+        {#<th>Отменить</th>#}
+    </tr>
+    </thead>
+    <tbody >
+    {% for transportation in transportations %}
+
+        <tr>
+
+            <td>{{ transportation.id }}</td>
+            <td>{{ transportation.dateStart|date('d.m.Y H:i') }}</td>
+            <td><a href="{{ path('enot_admin_transportation_find', {query: transportation.containerNumber}) }}">{{ transportation.containerNumber }}</a> </td>
+            <td>{{ transportation.fromAddress }}</td>
+            <td>{{ transportation.toAddress }}</td>
+            <td>{% if transportation.terminal %}{{ transportation.terminal.name }}{% endif %}</td>
+
+            <td>{% if transportation.vehicle %}{{ transportation.vehicle.name }}{% endif %}</td>
+            <td>{% if transportation.driver %}{{ transportation.driver.name }}{% endif %}</td>
+            <td>{% if transportation.driver %}<a href="tel:+{{ transportation.driver.phone }}">+{{ transportation.driver.phone }}{% endif %}</td>
+            <td>
+                {% if transportation.lastEvent == 1 %}
+                    <span class="label label-warning">Назначена</span>
+                {% elseif transportation.lastEvent == 2 %}
+                    <span class="label label-info">Прибыл на загрузку</span>
+                {% elseif transportation.lastEvent == 3 %}
+                    <span class="label label-info">В пути</span>
+                {% elseif transportation.lastEvent == 4 %}
+                    <span class="label label-success">На выгрузке</span>
+                {% elseif transportation.lastEvent == 5 %}
+                    <span class="label label-danger">Убыл от клиента</span>
+                {% elseif transportation.lastEvent == 6 %}
+                    <span class="label label-danger">Сдал порожний</span>
+                {% elseif transportation.lastEvent == 7 %}
+                    <span class="label label-primary">Завершена</span>
+                {% else %}<span class="label label-default">Не назначена</span>{% endif %}
+
+            </td>
+            {#<td><button class="btn {% if transportation.lastEvent == 0 %}disabled{% endif %}"><a href="{{ path('enot_admin_transportation_cancel', {id: transportation.id}) }}"> <i class="icon-trash"></i></a></button></td>#}
+        </tr>
+    {% endfor %}
+
+
+
+
+</table>

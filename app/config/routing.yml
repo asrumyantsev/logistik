@@ -1,0 +1,20 @@
+enot_app:
+    resource: "@EnotAppBundle/Resources/config/routing.yml"
+    prefix:   /
+
+enot_admin:
+  resource: "@EnotAdminBundle/Resources/config/routing.yml"
+  type:     rest
+  prefix:   /admin
+
+enot_api:
+  resource: "@EnotApiBundle/Resources/config/routing.yml"
+  type:     rest
+  prefix:   /api
+
+fos_user:
+  resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+NelmioApiDocBundle:
+  resource: "@NelmioApiDocBundle/Resources/config/routing/swaggerui.xml"
+  prefix:   /api/doc

@@ -1,0 +1,3 @@
+services:
+    enot_admin.excel_manager:
+        class: Enot\AdminBundle\Services\ExcelManager

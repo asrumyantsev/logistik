@@ -1,0 +1,40 @@
+enot_api_transportation:
+  resource: Enot\ApiBundle\Controller\TransportationController
+  prefix: /transportation
+  type: rest
+
+enot_api_pin:
+  resource: Enot\ApiBundle\Controller\PinController
+  prefix: /pin
+  type: rest
+
+enot_api_auth:
+  resource: Enot\ApiBundle\Controller\AuthController
+  prefix: /auth
+  type: rest
+
+enot_api_mobile:
+  resource: Enot\ApiBundle\Controller\MobileController
+  prefix: /mobile
+  type: rest
+
+enot_api_driver:
+  resource: Enot\ApiBundle\Controller\DriverController
+  prefix: /driver
+  type: rest
+
+enot_api_vehicle:
+  resource: Enot\ApiBundle\Controller\VehicleController
+  prefix: /vehicle
+  type: rest
+
+enot_api_trailer:
+  resource: Enot\ApiBundle\Controller\TrailerController
+  prefix: /trailer
+  type: rest
+
+
+enot_api_partner:
+  resource: Enot\ApiBundle\Controller\PartnerController
+  prefix: /partner
+  type: rest

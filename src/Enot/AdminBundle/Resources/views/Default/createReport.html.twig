@@ -1,0 +1,34 @@
+
+    <table style="border: 1px solid black">
+        <thead>
+        <th>Партнер</th>
+        <th>ФИО</th>
+        <th>Откуда</th>
+        <th>Куда</th>
+        <th>Адрес сдачи порожнего</th>
+        <th>Номер машины</th>
+        <th>Номер груза</th>
+        <th>Тип перевозки</th>
+        <th>Стоимость</th>
+        <th>Примерная стоимость</th>
+        <th>Документы</th>
+        </thead>
+        <tbody>
+        {% for transportation in transportations %}
+            <tr>
+                <td>{{ transportation.vehicle.partner.name }}</td>
+                <td>{{ transportation.driver.name }}</td>
+                <td>{{ transportation.fromAddress }}</td>
+                <td>{{ transportation.toAddress }}</td>
+                <td>{{ transportation.deliveryUnladenAddress }}</td>
+                <td>{{ transportation.vehicle.name }}</td>
+                <td>{{ transportation.containerNumber }}</td>
+                <td>Обычный</td>
+                <td>{{ transportation.price }}</td>
+                <td>{{ transportation.estimatedPrice }}</td>
+                <td>{% if transportation.passedInvoice %}Да{% else %}Нет{% endif %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+

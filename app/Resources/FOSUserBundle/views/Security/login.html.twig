@@ -1,0 +1,178 @@
+{% extends 'FOSUserBundle::layout.html.twig' %}
+{% block fos_user_content %}
+
+    {#<div class="sign">#}
+        {#<form class="form-signin" action="{{ path("fos_user_security_check") }}" method="post">#}
+            {#{% if error %}#}
+                {#<div style="color: red">{{ error.message }}</div>#}
+            {#{% endif %}#}
+            {#{% if csrf_token %}#}
+                {#<input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>#}
+            {#{% endif %}#}
+            {#<div class="sign__header">#}
+                {#<img src="{{ asset('assets/admin/img/logo-lg.png') }}" alt="">#}
+            {#</div>#}
+            {#<div class="sign__form form">#}
+                {#<h2 class="form__title">Вход в личный кабинет</h2>#}
+                {#{% if app.request.hasPreviousSession %}#}
+                    {#{% for type, messages in app.session.flashbag.all() %}#}
+                        {#{% for message in messages %}#}
+                            {#<div class="flash-{{ type }}">#}
+                                {#{{ message }}#}
+                            {#</div>#}
+                        {#{% endfor %}#}
+                    {#{% endfor %}#}
+                {#{% endif %}#}
+                {#<div class="form__row">#}
+                    {#<div class="form__field">#}
+                        {#<input type="text" id="username" class="form__field--input" placeholder="Телефон/e-mail"#}
+                               {#name="_username" required>#}
+                    {#</div>#}
+                    {#<div class="form__field form__field--has-error">#}
+                        {#<input id="password" type="text" class="form__field--input" placeholder="Пароль"#}
+                               {#name="_password" required>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<button type="submit" class="form__btn link">#}
+                    {#<span>Выполнить вход</span>#}
+                {#</button>#}
+            {#</div>#}
+        {#</form>#}
+
+    {#</div>#}
+
+
+
+    <div class="content">
+        <!-- Login Formular -->
+        <form class="form-vertical login-form" action="{{ path("fos_user_security_check") }}" method="post">
+            {% if csrf_token %}
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+            {% endif %}
+            <!-- Title -->
+            <h3 class="form-title">Необходимо авторизоваться</h3>
+
+            <!-- Error Message -->
+            <div class="alert fade in alert-danger" style="display: none;">
+                <i class="icon-remove close" data-dismiss="alert"></i>
+                Введите логин и пароль.
+            </div>
+
+            <!-- Input Fields -->
+            <div class="form-group">
+                <!--<label for="username">Username:</label>-->
+                <div class="input-icon">
+                    <i class="icon-user"></i>
+                    <input type="text" name="_username" class="form-control" placeholder="Введите логин." autofocus="autofocus" data-rule-required="true" data-msg-required="Введите почту." />
+                </div>
+            </div>
+            <div class="form-group">
+                <!--<label for="password">Password:</label>-->
+                <div class="input-icon">
+                    <i class="icon-lock"></i>
+                    <input type="password" name="_password" class="form-control" placeholder="Введите пароль." data-rule-required="true" data-msg-required="Введите пароль." />
+                </div>
+            </div>
+            <!-- /Input Fields -->
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+                {#<label class="checkbox pull-left"><input type="checkbox" class="uniform" name="remember"> Запомнить меня</label>#}
+                <button type="submit" class="submit btn btn-primary pull-right">
+                    Войти <i class="icon-angle-right"></i>
+                </button>
+            </div>
+        </form>
+        <!-- /Login Formular -->
+
+        <!-- Register Formular (hidden by default) -->
+        <form class="form-vertical register-form" action="{{ path("fos_user_security_check") }}" method="post" style="display: none;">
+            {% if csrf_token %}
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+            {% endif %}
+            <!-- Title -->
+            <h3 class="form-title">Зарегистрироваться</h3>
+
+            <!-- Input Fields -->
+            <div class="form-group">
+                <div class="input-icon">
+                    <i class="icon-user"></i>
+                    <input type="text" name="_username" class="form-control" placeholder="Username" autofocus="autofocus" data-rule-required="true" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-icon">
+                    <i class="icon-lock"></i>
+                    <input type="password" name="_password" class="form-control" placeholder="Password" id="register_password" data-rule-required="true" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-icon">
+                    <i class="icon-ok"></i>
+                    <input type="password" name="password_confirm" class="form-control" placeholder="Confirm Password" data-rule-required="true" data-rule-equalTo="#register_password" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-icon">
+                    <i class="icon-envelope"></i>
+                    <input type="text" name="Email" class="form-control" placeholder="Email address" data-rule-required="true" data-rule-email="true" />
+                </div>
+            </div>
+            <div class="form-group spacing-top">
+                <label class="checkbox"><input type="checkbox" class="uniform" name="remember" data-rule-required="true" data-msg-required="Please accept ToS first.">Я согласен с <a href="javascript:void(0);">правилами сервиса</a></label>
+                <label for="remember" class="has-error help-block" generated="true" style="display:none;"></label>
+            </div>
+            <!-- /Input Fields -->
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+                <button type="button" class="back btn btn-default pull-left">
+                    <i class="icon-angle-left"></i> Назад</i>
+                </button>
+                <button type="submit" class="submit btn btn-primary pull-right">
+                    Зарегистрироваться <i class="icon-angle-right"></i>
+                </button>
+            </div>
+        </form>
+        <!-- /Register Formular -->
+    </div> <!-- /.content -->
+
+    <!-- Forgot Password Form -->
+    {#<div class="inner-box">#}
+        {#<div class="content">#}
+            {#<!-- Close Button -->#}
+            {#<i class="icon-remove close hide-default"></i>#}
+
+            {#<!-- Link as Toggle Button -->#}
+            {#<a href="#" class="forgot-password-link">Забыли пароль?</a>#}
+
+            {#<!-- Forgot Password Formular -->#}
+            {#<form class="form-vertical forgot-password-form hide-default" action="{{ path("fos_user_security_check") }}" method="post">{% if csrf_token %}#}
+                    {#<input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>#}
+                {#{% endif %}#}
+                {#<!-- Input Fields -->#}
+                {#<div class="form-group">#}
+                    {#<!--<label for="email">Email:</label>-->#}
+                    {#<div class="input-icon">#}
+                        {#<i class="icon-envelope"></i>#}
+                        {#<input type="text" name="email" class="form-control" placeholder="Enter email address" data-rule-required="true" data-rule-email="true" data-msg-required="Please enter your email." />#}
+                    {#</div>#}
+                {#</div>#}
+                {#<!-- /Input Fields -->#}
+
+                {#<button type="submit" class="submit btn btn-default btn-block">#}
+                    {#Сбросить пароль.#}
+                {#</button>#}
+            {#</form>#}
+            {#<!-- /Forgot Password Formular -->#}
+
+            {#<!-- Shows up if reset-button was clicked -->#}
+            {#<div class="forgot-password-done hide-default">#}
+                {#<i class="icon-ok success-icon"></i> <!-- Error-Alternative: <i class="icon-remove danger-icon"></i> -->#}
+                {#<span>Отлично. Мы отправили информацию на почту.</span>#}
+            {#</div>#}
+        {#</div> <!-- /.content -->#}
+    {#</div>#}
+
+
+{% endblock fos_user_content %}

@@ -1,0 +1,4 @@
+services:
+#    enot_app.example:
+#        class: Enot\AppBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

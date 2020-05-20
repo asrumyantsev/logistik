@@ -1,0 +1,85 @@
+services:
+  enot_api.response_manager:
+    class: Enot\ApiBundle\Services\ResponseManager
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@fos_rest.view_handler'
+      - '@jms_serializer'
+
+  guzzle.client:
+    class: GuzzleHttp\Client
+
+  http.client:
+    class: Enot\ApiBundle\Services\HttpClient
+    arguments: ['@guzzle.client']
+
+  enot_api.user_manager:
+    class: Enot\ApiBundle\Services\UserManager
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@fos_user.user_manager'
+      - '@http.client'
+      - '@security.encoder_factory'
+
+  enot_api.services.configuration_manager:
+    class: Enot\ApiBundle\Services\ConfigurationManager
+    arguments: ['@fos_oauth_server.entity_manager']
+
+  enot_api.services.transportation_manager:
+    class: Enot\ApiBundle\Services\TransportationManager
+    arguments:
+      - '@fos_oauth_server.entity_manager'
+      - '@enot_api.services.configuration_manager'
+      - '@enot_api.user_manager'
+      - '@enot_log.logger'
+      - '@http.client'
+      - '@event_dispatcher'
+      - '@enot_api.services.auto_setter_manager'
+
+  enot_api.services.driver_manager:
+    class: Enot\ApiBundle\Services\DriverManager
+    arguments:
+      - '@fos_oauth_server.entity_manager'
+      - '@enot_api.user_manager'
+
+  enot_api.services.vehicle_manager:
+    class: Enot\ApiBundle\Services\VehicleManager
+    arguments: ['@fos_oauth_server.entity_manager']
+
+  enot_api.services.partner_manager:
+    class: Enot\ApiBundle\Services\PartnerManager
+    arguments:
+        - '@fos_oauth_server.entity_manager'
+        - '@enot_api.user_manager'
+        - '@swiftmailer.mailer.default'
+
+  enot_api.services.trailer_manager:
+    class: Enot\ApiBundle\Services\TrailerManager
+    arguments: ['@fos_oauth_server.entity_manager']
+
+  #Event Subscribers
+
+  enot_api.event_subscriber.driver_event_subscriber:
+    class: Enot\ApiBundle\EventSubscriber\DriverEventSubscriber
+    tags:
+      - { name: kernel.event_subscriber }
+    arguments:
+      - '@enot_notification.notification_manager'
+
+  enot_api.event_subscriber.transportation_field_event_subscriber:
+    class: Enot\ApiBundle\EventSubscriber\TransportationFieldEventSubscriber
+    tags:
+      - { name: kernel.event_subscriber }
+    arguments:
+      - '@enot_notification.notification_manager'
+
+  enot_api.services.auto_setter_manager:
+    class: Enot\ApiBundle\Services\AutoSetterManager
+    arguments:
+      - '@enot_api.services.driver_manager'
+      - '@enot_api.services.vehicle_manager'
+      - '@enot_api.services.configuration_manager'
+      - '@http.client'
+
+  enot_api.services.report_manager:
+    class: Enot\ApiBundle\Services\ReportManager

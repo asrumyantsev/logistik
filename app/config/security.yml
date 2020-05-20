@@ -1,0 +1,83 @@
+# To get started with security, check out the documentation:
+# https://symfony.com/doc/current/security.html
+security:
+
+  encoders:
+    FOS\UserBundle\Model\UserInterface: sha512
+    Symfony\Component\Security\Core\User\User: plaintext
+
+  role_hierarchy:
+    ROLE_SUPPORT: ROLE_USER
+    ROLE_ADMIN: ROLE_SUPPORT
+    ROLE_SUPER_ADMIN: ROLE_ADMIN
+
+  # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+  providers:
+    fos_userbundle:
+      id: fos_user.user_provider.username
+
+    local:
+      memory:
+        users:
+          api:
+            password: doc
+
+  firewalls:
+    main:
+      pattern: ^/                                # Все прочие страницы - согласно access_control
+      logout:       true
+      anonymous:    true
+      form_login:
+        provider: fos_userbundle
+        csrf_token_generator: security.csrf.token_manager
+        always_use_default_target_path: false
+        default_target_path: /admin
+    docs_req:
+      pattern: ^/api/doc
+      http_basic:
+        realm: "API DOC"
+        provider: local
+
+    mobile_reg:
+      pattern: ^/api/pin
+      security: false
+    report:
+      pattern: ^/admin/create_report
+      security: false
+    mobile_reg_confirm:
+      pattern: ^/api/pin/confirm
+      security: false
+    mobile_auth_check:
+      pattern: ^/api/auth/check
+      security: false
+      #        payment_topup:
+      #           pattern: ^/api/payment/usertopup
+      #           security: false
+
+      #        api:
+      #           pattern: ^/api/                            # Для всех других страниц ^/api/mobile
+      #           fos_oauth: true                            # включаем OAuth2
+      #           stateless: true                            # Не использовать куки
+      #           anonymous: false                           # Анонимный доступ запрещён
+    fos:
+       pattern: ^/                                # Все прочие страницы - согласно access_control
+       logout:       true
+       anonymous:    true
+       form_login:
+           provider: fos_userbundle
+           csrf_token_generator: security.csrf.token_manager
+           always_use_default_target_path: false
+           default_target_path: /admin/
+    api:
+      pattern: ^/api/
+      http_basic:
+        realm: "API"
+        provider: fos_userbundle
+
+  access_control:
+  #        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+  #        - { path: ^/register$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+  #        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+  #        - { path: ^/admin/, role: ROLE_SUPER_ADMIN }
+  - { path: ^/admin/, role: ROLE_USER }
+  - { path: ^/oauth/v2/token, role: IS_AUTHENTICATED_ANONYMOUSLY }  #доступ для получения токена

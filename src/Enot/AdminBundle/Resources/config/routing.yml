@@ -1,0 +1,24 @@
+enot_admin_default:
+    resource: Enot\AdminBundle\Controller\DefaultController
+    prefix: /
+    type: annotation
+
+enot_admin_driver:
+    resource: Enot\AdminBundle\Controller\DriverController
+    prefix: /driver
+    type: annotation
+
+enot_admin_partner:
+    resource: Enot\AdminBundle\Controller\PartnerController
+    prefix: /partner
+    type: annotation
+
+enot_admin_car:
+    resource: Enot\AdminBundle\Controller\CarController
+    prefix: /car
+    type: annotation
+
+enot_admin_transportation:
+    resource: Enot\AdminBundle\Controller\TransportationController
+    prefix: /transportation
+    type: annotation

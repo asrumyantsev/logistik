@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Авторизация | Chombo fleet system</title>
+
+    <!--=== CSS ===-->
+
+    <!-- Bootstrap -->
+    <!-- Bootstrap -->
+    <link href="{{ asset('assets/admin/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
+
+    <!-- jQuery UI -->
+    <!--<link href="plugins/jquery-ui/jquery-ui-1.10.2.custom.css" rel="stylesheet" type="text/css" />-->
+    <!--[if lt IE 9]>
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('assets/admin/plugins/jquery-ui/jquery.ui.1.10.2.ie.css') }}"/>
+    <![endif]-->
+
+    <!-- Theme -->
+    <link href="{{ asset('assets/admin/css/main.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/admin/css/plugins.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/admin/css/responsive.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/admin/css/icons.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/admin/css/login.css') }}" rel="stylesheet" type="text/css"/>
+
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/fontawesome/font-awesome.css') }}">
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/fontawesome/font-awesome-ie7.min.css') }}">
+    <![endif]-->
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+
+    <!--=== JavaScript ===-->
+
+    <script type="text/javascript" src="{{ asset('assets/admin/js/libs/jquery-1.10.2.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('assets/admin/plugins/jquery-ui/jquery-ui-1.10.2.custom.min.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('assets/admin/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/admin/js/libs/lodash.compat.min.js') }}"></script>
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+
+    <!--[if lt IE 9]>
+    <script src="{{ asset('assets/admin/js/libs/html5shiv.js') }}"></script>
+    <![endif]-->
+
+    <!-- Smartphone Touch Events -->
+    <script type="text/javascript"
+            src="{{ asset('assets/admin/plugins/touchpunch/jquery.ui.touch-punch.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/admin/plugins/event.swipe/jquery.event.move.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/admin/plugins/event.swipe/jquery.event.swipe.js') }}"></script>
+
+    <!-- General -->
+    <script type="text/javascript" src="{{ asset('assets/admin/js/libs/breakpoints.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/admin/plugins/respond/respond.min.js') }}"></script>
+    <!-- Polyfill for min/max-width CSS3 Media Queries (only for IE8) -->
+    <script type="text/javascript" src="{{ asset('assets/admin/plugins/cookie/jquery.cookie.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('assets/admin/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('assets/admin/plugins/slimscroll/jquery.slimscroll.horizontal.min.js') }}"></script>
+
+    <!-- App -->
+    <script type="text/javascript" src="{{ asset('assets/admin/js/app.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/admin/js/login.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/admin/js/plugins.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/admin/js/plugins.form-components.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+            "use strict";
+
+            Login.init(); // Init login JavaScript
+        });
+    </script>
+</head>
+
+<body class="login">
+<!-- Logo -->
+<div class="logo">
+    <img src="{{ asset('assets/admin/img/logo.png') }}" alt="logo" />
+</div>
+<!-- /Logo -->
+
+<!-- Login Box -->
+<div class="box">
+    {% block fos_user_content %}
+
+    {% endblock fos_user_content %}
+    <!-- /Forgot Password Form -->
+</div>
+<!-- /Login Box -->
+
+<!-- Footer -->
+<div class="footer">
+    {#<a href="#" class="sign-up">Нет аккаунта? <strong>Зарегистрироваться</strong></a>#}
+</div>
+<!-- /Footer -->
+</body>
+</html>

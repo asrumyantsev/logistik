@@ -1,0 +1,203 @@
+imports:
+- { resource: parameters.yml }
+- { resource: security.yml }
+- { resource: services.yml }
+- { resource: "@EnotApiBundle/Resources/config/services.yml" }
+- { resource: "@EnotLogBundle/Resources/config/services.yml" }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+  locale: en
+
+framework:
+  #esi: ~
+  translator: { fallbacks: ['%locale%'] }
+  secret: '%secret%'
+  router:
+    resource: '%kernel.project_dir%/app/config/routing.yml'
+    strict_requirements: ~
+  form: ~
+  csrf_protection: ~
+  validation: { enable_annotations: true }
+  #serializer: { enable_annotations: true }
+  templating:
+    engines: ['twig']
+  default_locale: '%locale%'
+  trusted_hosts: ~
+  session:
+    # https://symfony.com/doc/current/reference/configuration/framework.html#handler-id
+    handler_id: session.handler.native_file
+    save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
+  fragments: ~
+  http_method_override: true
+  assets: ~
+  php_errors:
+    log: true
+
+# Twig Configuration
+twig:
+  debug: '%kernel.debug%'
+  strict_variables: '%kernel.debug%'
+
+# Doctrine Configuration
+doctrine:
+  dbal:
+    driver: pdo_mysql
+    host: '%database_host%'
+    port: '%database_port%'
+    dbname: '%database_name%'
+    user: '%database_user%'
+    password: '%database_password%'
+    charset: UTF8
+    # if using pdo_sqlite as your database driver:
+    #   1. add the path in parameters.yml
+    #     e.g. database_path: '%kernel.project_dir%/var/data/data.sqlite'
+    #   2. Uncomment database_path in parameters.yml.dist
+    #   3. Uncomment next line:
+    #path: '%database_path%'
+
+  orm:
+    auto_generate_proxy_classes: '%kernel.debug%'
+    naming_strategy: doctrine.orm.naming_strategy.underscore
+    auto_mapping: true
+    dql:
+      datetime_functions:
+        date: Enot\ApiBundle\Model\Date
+
+
+
+doctrine_mongodb:
+  connections:
+    default:
+      server: "%mongodb_server%"
+      options: {}
+  default_database: "%mongodb_database%"
+  document_managers:
+    default:
+      auto_mapping: true
+
+# Swiftmailer Configuration
+swiftmailer:
+  transport: '%mailer_transport%'
+  host: '%mailer_host%'
+  username: '%mailer_user%'
+  password: '%mailer_password%'
+  port: 465
+  encryption: ssl
+  auth_mode:  login
+  spool: { type: memory }
+
+#nelmio_api_doc:
+#    name: 'API documentation for charging system'
+#    sandbox:
+#        authentication:             # default is `~` (`null`), if set, the sandbox automatically
+#                                    # send authenticated requests using the configured `delivery`
+#            name: access_token      # access token name or query parameter name or header name
+#            delivery: http          # `query`, `http`, and `header` are supported
+#            # Required if http delivery is selected.
+#            type:     bearer         # `basic`, `bearer` are supported
+#            custom_endpoint: false   # default is `false`, if `true`, your user will be able to
+#                                    # specify its own endpoint
+#        enabled:  true              # default is `true`, you can set this parameter to `false`
+#                                    # to disable the sandbox
+#        #endpoint: http://sandbox.example.com/   # default is `/app_dev.php`, use this parameter
+#                                                # to define which URL to call through the sandbox
+#        #accept_type: application/json           # default is `~` (`null`), if set, the value is
+#                                                # automatically populated as the `Accept` header
+#        body_format:
+#            formats: [ json ]             # array of enabled body formats,
+#                                                # remove all elements to disable the selectbox
+#            default_format: json                # default is `form`, determines whether to send
+#                                                # `x-www-form-urlencoded` data or json-encoded
+#                                                # data (by setting this parameter to `json`) in                                                # sandbox requests
+#        request_format:
+#            formats:                            # default is `json` and `xml`,
+#                json: application/json          # override to add custom formats or disable
+#                #xml: application/xml            # the default formats
+#            method: accept_header    # default is `format_param`, alternately `accept_header`,
+#                                    # decides how to request the response format
+#            default_format: json    # default is `json`,
+#                                    # default content format to request (see formats)
+#        entity_to_choice: false     # default is `true`, if `false`, entity collection
+#                                    # will not be mapped as choice
+
+nelmio_api_doc:
+  documentation:
+    #        host: api.example.com
+    #        schemes: [http, https]
+    info:
+      title: API Documentation!
+      description: Developed by Chombo
+      version: 1.0.0
+  #        securityDefinitions:
+  #            Bearer:
+  #                type: apiKey
+  #                description: 'Value: Bearer {jwt}'
+  #                name: Authorization
+  #                in: header
+  #        security:
+  #            - Bearer: []
+  routes:
+      default:
+        path_patterns:
+          - ^/api(?!/doc$) # Accepts routes under /api except /api/doc
+
+fos_rest:
+  routing_loader:
+    default_format: json                            # Все ответы должны быть в JSON
+    include_format: false                           # Мы не нуждаемся в передаче формата
+    # Этого достаточно что бы все ответы были в JSON
+  serializer:
+    serialize_null: true
+  body_listener: true
+  view:
+    view_response_listener: force
+  format_listener:
+    rules:
+    - { path: '^/api/doc', fallback_format: html }
+    - { path: '^/api/', fallback_format: json }
+    - { path: '^/', fallback_format: html}
+  exception:
+    enabled: true
+    exception_controller: 'Enot\ApiBundle\Controller\ExceptionController::showAction'
+    messages:
+      Symfony\Component\HttpKernel\Exception\BadRequestHttpException: true
+
+
+
+fos_user:
+  db_driver: orm
+  firewall_name: fos
+  user_class: Enot\ApiBundle\Entity\User
+  from_email:
+    address: "%mailer_user%"
+    sender_name: "%mailer_user%"
+
+fos_oauth_server:
+  db_driver:           orm
+  client_class:        Enot\ApiBundle\Entity\Client
+  access_token_class:  Enot\ApiBundle\Entity\AccessToken
+  refresh_token_class: Enot\ApiBundle\Entity\RefreshToken
+  auth_code_class:     Enot\ApiBundle\Entity\AuthCode
+  service:
+    user_provider: fos_user.user_provider.username             # Тут мы указываем кто будет отвечать за генерацию Access Token'а
+    options:
+      access_token_lifetime: 86400
+
+
+jms_serializer:
+  property_naming:
+    separator:  _
+    lower_case: true
+
+  metadata:
+    cache: file
+    debug: "%kernel.debug%"
+    file_cache:
+      dir: "%kernel.cache_dir%/serializer"
+    auto_detection: true # Don't forget this line
+#        directories:
+#            UserBundle:
+#                namespace_prefix: FOS\UserBundle
+#                path: "%kernel.root_dir%/Resources/FOSUserBundle/serializer/"

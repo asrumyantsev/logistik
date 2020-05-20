@@ -1,0 +1,11 @@
+services:
+    enot_log.logger:
+        class: Enot\LogBundle\Utils\Logger
+        arguments:
+            - '@doctrine.odm.mongodb.document_manager'
+
+    enot_log.request_response_subscriber:
+        class: Enot\LogBundle\EventSubscriber\RequestResponseSubscriber
+        arguments: [ '@service_container', '@security.token_storage', '@enot_log.logger']
+        tags:
+            - { name: kernel.event_subscriber }

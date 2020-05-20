@@ -1,0 +1,62 @@
+{% extends '@EnotAdmin/base.html.twig' %}
+
+{% block content %}
+
+    <div class="crumbs">
+        <ul id="breadcrumbs" class="breadcrumb">
+            <li>
+                <i class="icon-home"></i>
+                <a href="{{ path('enot_admin_homepage') }}">Редактирование партнера</a>
+            </li>
+        </ul>
+
+    </div>
+    <!-- /Breadcrumbs line -->
+
+    <!--=== Page Header ===-->
+    <div class="page-header">
+        <div class="page-title">
+            <h3>Редактирование партнера</h3>
+        </div>
+    </div>
+    <!-- /Page Header -->
+
+    <!--=== Page Content ===-->
+    <div class="row">
+        <!--=== Example Box ===-->
+        <div class="col-md-12">
+
+            <div class="table-block__table">
+                <form method="post">
+
+                    <div class="widget box">
+                        <div class="widget-header">
+                            <h4><i class="icon-reorder"></i> Партнер </h4>
+                        </div>
+                        <div class="widget-content no-padding">
+                            <table class="table table-striped table-bordered table-hover table-checkable table-responsive datatable">
+                                <tbody>
+                                <tr>
+                                    <td>Приоритет</td>
+                                    <td><input class="form-control" name="priority" type="text" value="{{ partnerEntity.priority }}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td><input class="form-control" name="email" type="text" value="{{ partnerEntity.user.email }}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Пароль</td>
+                                    <td><input class="form-control" name="password" type="text" value=""></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" type="submit" >Сохранить</button>
+                </form>
+            </div>
+
+        </div> <!-- /.col-md-12 -->
+        <!-- /Example Box -->
+    </div>
+{% endblock %}
+

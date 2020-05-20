@@ -1,0 +1,52 @@
+services:
+  #    enot_notification.example:
+  #        class: Enot\NotificationBundle\Example
+  #        arguments: ["@service_id", "plain_value", "%parameter%"]
+
+
+
+  enot_notification.sms_factory:
+    class: Enot\NotificationBundle\Factory\SmsFactory
+    arguments:
+    - '@enot_notification.nexmo'
+    - '@enot_notification.sms_ru'
+
+  enot_notification.sms_manager:
+    class: Enot\NotificationBundle\Services\SmsManager
+    arguments:
+    - '@enot_notification.sms_factory'
+
+  enot_notification.push_manager:
+    class: Enot\NotificationBundle\Services\PushManager
+    arguments:
+    - '@doctrine.orm.entity_manager'
+    - '@http.client'
+
+  enot_notification.email_manager:
+    class: Enot\NotificationBundle\Services\EmailManager
+    arguments:
+    - '@http.client'
+    - '@twig'
+    - '@swiftmailer.mailer.default'
+
+  enot_notification.notification_manager:
+    class: Enot\NotificationBundle\Services\NotificationManager
+    arguments:
+    - '@enot_notification.push_manager'
+    - '@enot_notification.sms_manager'
+    - '@enot_notification.email_manager'
+  #SendSms
+  enot_notification.sms_ru:
+    class: Enot\NotificationBundle\Model\SmsRu
+    arguments:
+    - '@doctrine.orm.entity_manager'
+    - '@http.client'
+
+  enot_notification.nexmo:
+    class: Enot\NotificationBundle\Model\Nexmo
+    arguments:
+    - '@doctrine.orm.entity_manager'
+    - '@http.client'
+
+
+
